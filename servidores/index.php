@@ -163,7 +163,7 @@ echo '<input type="date" name="startdate" />'."\n";
 echo '<input type="date" name="enddate" />'."\n";
 echo "</div>";
 echo '<input type="checkbox" name="cpf" value = "1" /> CPFs válidos '."\n";
-echo '<input type="checkbox" name="dataconclusao" value = "1" />Mostrar data de conclusão'."\n";
+echo '<input type="checkbox" name="dataconclusao" value = "1" />Mostrar datas'."\n";
 echo '<input type="checkbox" onclick="hideDays()" id= "diadehj" name="diadehj" value = "1" />Apenas para a data atual'."\n";
 /*
 echo html_writer::select($roleoptions,'roleid',$roleid,false);
@@ -397,6 +397,29 @@ if (/*!empty($instanceid) && */!empty($roleid)) {
         $data = array ($u->firstname.' '.$u->lastname, $cpf, date('d-m-Y H:i:s', $u->timemodified));
       }
       else{
+        unset($table);
+        $table = new flexible_table('course-sistec-'.$course->id.'-'.$cm->id.'-'.$roleid);
+        $table->course = $course;
+
+        $table->define_columns(array('fullname','count',));
+        $table->define_headers(array(get_string('user'),'CPF'));
+        $table->define_baseurl($baseurl);
+
+        $table->set_attribute('cellpadding','5');
+        $table->set_attribute('class', 'generaltable generalbox reporttable');
+
+        $table->sortable(true,'lastname','ASC');
+        $table->no_sorting('select');
+
+        $table->set_control_variables(array(
+                                            TABLE_VAR_SORT    => 'ssort',
+                                            TABLE_VAR_HIDE    => 'shide',
+                                            TABLE_VAR_SHOW    => 'sshow',
+                                            TABLE_VAR_IFIRST  => 'sifirst',
+                                            TABLE_VAR_ILAST   => 'silast',
+                                            TABLE_VAR_PAGE    => 'spage'
+                                            ));
+        $table->setup();
         $data = array ($u->firstname.' '.$u->lastname, $cpf);
       }
     }
