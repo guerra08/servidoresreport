@@ -1,14 +1,4 @@
-/* Esboço da query para pegar os alunos que não concluiram o curso */
-
-SELECT u.id, u.firstname, u.lastname FROM mdl_user u WHERE u.id IN
-
-      (SELECT cmc.userid FROM mdl_course_modules_completion cmc, mdl_course_modules cm 
-	  WHERE cm.course = 'variavel' AND cm.id = cmc.coursemoduleid AND cmc.userid NOT IN
-
-        (SELECT cc.userid FROM mdl_course_completions cc WHERE cc.course = 'variavel')
-
-      );
-	  
+  
 /*Query para resultar nos servidores que fazem parte de um curso / servidores que concluiram um curso*/
 
 /*Concluintes de vários cursos*/
